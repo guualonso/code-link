@@ -32,6 +32,7 @@ public class Usuario {
     private String bio;
     private Long fotoPerfil;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.ROLE_USER;

@@ -1,0 +1,62 @@
+<div class="login-page">
+    <aside class="hero">
+        <header class="hero-header">
+            <img src="/assets/logo-white.png" alt="CodeLink" class="logo">
+        </header>
+        <div class="hero-content">
+            <h1>Bem-vindo!</h1>
+            <p class="hero-lead">Lorem Ipsum is simply</p>
+            <p class="hero-desc">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+            </p>
+        </div>
+        <div class="illustration" aria-hidden="true">
+            <img src="assets/Saly-1.svg" alt="illustration" class="saly">
+        </div>
+    
+        <div class="hero-bottom">
+            <div class="quick-login">   
+                <h4>Entre como</h4>
+                <div class="users">
+                    <div class="user-card">
+                        <img src="/assets/user1.jpg" alt="user" class="avatar">
+                        <div class="user-name">Pedro Fuk.</div>
+                        <div class="user-status">Ativo 1 dia atrás</div>
+                    </div>
+                    <div class="user-card">
+                        <img src="/assets/user2.jpg" alt="user" class="avatar">
+                        <div class="user-name">Gustavo A.</div>
+                        <div class="user-status">Ativo 4 dias atrás</div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </aside>
+
+    <main class="login-panel">
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <small>Bem-vindo ao <span class="brand">CodeLink</span></small>
+                    <h2>Entrar</h2>
+                </div>
+                <button (click)="goToRegister()" class="register-link">Registre-se</button>
+            </div>
+
+            <button class="btn google-btn" type="button">
+                <img src="/assets/google-icon.svg" alt="Google" />
+                <span>Entrar com Google</span>
+            </button>
+
+            <form (ngSubmit)="login()" class="login-form" #f="ngForm" novalidate>
+                <label>Digite seu E-mail</label>
+                <input type="email" [(ngModel)]="email" name="email" required placeholder="E-mail" />
+
+                <label>Digite sua Senha</label>
+                <input type="password" [(ngModel)]="senha" name="senha" required placeholder="Senha" />
+
+                <button class="btn primary" type="submit" [disabled]="f.invalid">Entrar</button>
+            </form>
+        </div>
+    </main>
+</div>

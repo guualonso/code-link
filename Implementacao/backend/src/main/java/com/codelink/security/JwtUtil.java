@@ -55,4 +55,37 @@ public class JwtUtil {
             return false;
         }
     }
+
+    public String generateTokenFromUser(com.codelink.model.Usuario usuario) {
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + jwtExpirationMs);
+
+        return Jwts.builder()
+                .setSubject(usuario.getEmail())
+                .claim("id", usuario.getId())
+                .claim("role", usuario.getRole().name())
+                .setIssuedAt(now)
+                .setExpiration(exp)
+                .signWith(Keys.hmacShaKeyFor(getSigningKeyBytes()), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public Long getUserIdFromJwt(String token) {
+        return ((Number) Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(getSigningKeyBytes()))
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("id")).longValue();
+    }
+
+    public String getRoleFromJwt(String token) {
+        Object r = Jwts.parserBuilder()
+                .setSigningKey(Keys.hmacShaKeyFor(getSigningKeyBytes()))
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role");
+        return r == null ? null : r.toString();
+    }   
 }

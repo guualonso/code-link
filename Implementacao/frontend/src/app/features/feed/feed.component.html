@@ -1,0 +1,147 @@
+<div class="feed-container">
+  <!-- Sidebar esquerda -->
+  <aside class="sidebar-left">
+    <div class="logo">
+      <img src="/assets/logo-feed.png" alt="CodeLink" class="logo-img">
+      <span>CodeLink</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/feed" routerLinkActive="active" class="nav-item">
+        <img src="/assets/home.svg" alt="Home" class="home-img">
+        <span class="icon"></span> Início
+      </a>
+      <a routerLink="/profile" routerLinkActive="active" class="nav-item">
+        <img src="/assets/perfil.svg" alt="Perfil" class="perfil-img">
+        <span class="icon"></span> Perfil
+      </a>
+      <a routerLink="/communities" routerLinkActive="active" class="nav-item">
+        <img src="/assets/comunidade.svg" alt="Comunidades" class="Comunidades">
+        <span class="icon"></span> Explorar Comunidades
+      </a>
+      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
+        <img src="/assets/config.svg" alt="Configurações" class="config-img">
+        <span class="icon"></span> Configurações
+      </a>
+    </nav>
+
+    <div class="communities-section">
+      <h3>Minhas Comunidades</h3>
+      <div class="communities-list">
+        <div class="community-item">
+          <img src="/assets/web-development.png" alt="Community" class="community-icon">
+          <span>Web Development</span>
+        </div>
+        <div class="community-item">
+          <img src="/assets/angular.png" alt="Community" class="community-icon">
+          <span>Angular</span>
+        </div>
+        <div class="community-item">
+          <img src="/assets/python.png" alt="Community" class="community-icon">
+          <span>Python</span>
+        </div>
+        <div class="community-item">
+          <img src="/assets/ux.png" alt="Community" class="community-icon">
+          <span>WebKit</span>
+        </div>
+      </div>
+      <button class="view-all-btn">Ver todos</button>
+    </div>
+  </aside>
+
+  <!-- Feed central -->
+  <main class="feed-main">
+    <header class="feed-header">
+      <div class="header-content">
+        <h1>CodeLink</h1>
+        <button routerLink="/posts/create" class="add-post-btn">+ Criar Post</button>
+      </div>
+    </header>
+
+    <div class="posts-container">
+      <div class="post fade-in" *ngFor="let p of posts">
+        <div class="post-header">
+          <img [src]="p.autor.avatarUrl" class="avatar" alt="Avatar">
+          <div class="post-info">
+            <strong>{{ p.autor.nome }}</strong>
+            <span class="post-date">{{ p.dataPostagem | date:'short' }}</span>
+          </div>
+          <button class="post-menu">⋯</button>
+        </div>
+
+        <p class="post-text">{{ p.conteudo }}</p>
+
+        <img *ngIf="p.imagem" [src]="p.imagem" class="post-image" alt="Post image">
+
+        <div class="post-stats">
+          <span>❤️ {{ p.likes }} curtidas</span>
+          <span>💬 Comentários</span>
+        </div>
+
+        <div class="post-actions">
+          <button class="action-btn" (click)="like(p)">❤️ Curtir</button>
+          <button class="action-btn">💬 Comentar</button>
+          <a [routerLink]="['/posts', p.id]" class="action-btn">📄 Ver detalhes</a>
+        </div>
+      </div>
+
+      <div #anchor class="scroll-anchor"></div>
+
+      <!-- Loading -->
+      <div class="loading" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Carregando posts...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Sidebar direita -->
+  <aside class="sidebar-right">
+    <div class="recommended-section">
+      <h3>Recomendado para você</h3>
+      <div class="recommended-list">
+        <div class="recommended-item">
+          <img src="/assets/react.png" alt="User" class="rec-avatar">
+          <div class="rec-info">
+            <strong>React</strong>
+            <span>123 membros</span>
+          </div>
+          <button class="follow-btn" aria-label="Entrar na comunidade">
+            <img src="/assets/entrar-vetor.svg" alt="Entrar" />
+          </button>
+        </div>
+        <div class="recommended-item">
+          <img src="/assets/sql.png" alt="User" class="rec-avatar">
+          <div class="rec-info">
+            <strong>SQL</strong>
+            <span>456 membros</span>
+          </div>
+          <button class="follow-btn" aria-label="Entrar na comunidade">
+            <img src="/assets/entrar-vetor.svg" alt="Entrar" />
+          </button>
+        </div>
+        <div class="recommended-item">
+          <img src="/assets/estagios.png" alt="User" class="rec-avatar">
+          <div class="rec-info">
+            <strong>Estágio</strong>
+            <span>764 membros</span>
+          </div>
+          <button class="follow-btn" aria-label="Entrar na comunidade">
+            <img src="/assets/entrar-vetor.svg" alt="Entrar" />
+          </button>
+        </div>
+        <div class="recommended-item">
+          <img src="/assets/cyber.png" alt="User" class="rec-avatar">
+          <div class="rec-info">
+            <strong>Cybersecurity</strong>
+            <span>789 membros</span>
+          </div>
+          <button class="follow-btn" aria-label="Entrar na comunidade">
+            <img src="/assets/entrar-vetor.svg" alt="Entrar" />
+          </button>
+        </div>
+      </div>
+      <a href="#" class="see-more">Ver mais...</a>
+    </div>
+  </aside>
+</div>

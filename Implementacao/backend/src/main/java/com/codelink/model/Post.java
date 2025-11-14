@@ -20,6 +20,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String conteudo;
 
+    @Column(columnDefinition = "TEXT")
     private String imagem;
     private LocalDateTime dataPostagem;
     private int likes;

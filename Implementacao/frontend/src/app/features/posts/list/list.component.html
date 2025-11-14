@@ -1,0 +1,10 @@
+<div class="posts-list">
+  <h2>Posts</h2>
+
+  <button (click)="createNew()">Criar Novo Post</button>
+
+  <div *ngFor="let p of posts" (click)="openDetail(p.id)" class="post-item">
+    <p><strong>{{ p.conteudo }}</strong></p>
+    <small>Autor: {{ p.autor.nome }}</small>
+  </div>
+</div>

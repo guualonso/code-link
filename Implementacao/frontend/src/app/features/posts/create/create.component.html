@@ -1,0 +1,27 @@
+<div class="create-post">
+
+  <h2>Novo Post</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <textarea formControlName="conteudo"
+              rows="4"
+              placeholder="Escreva algo..."
+              class="input-text">
+    </textarea>
+
+    <div class="upload-area">
+      <input type="file" accept="image/*" (change)="onImageChange($event)">
+      <span>Selecione uma imagem...</span>
+    </div>
+
+    <img *ngIf="previewImage"
+         [src]="previewImage"
+         class="preview">
+
+    <button class="publish-btn" [disabled]="loading || form.invalid">
+      {{ loading ? 'Publicando...' : 'Publicar' }}
+    </button>
+  </form>
+
+</div>

@@ -35,17 +35,56 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
-            if (jwtUtil.validateJwt(token)) {
-                username = jwtUtil.getUsernameFromJwt(token);
-            }
-        }
+            try {
+                if (jwtUtil.validateJwt(token)) {
+                    username = jwtUtil.getUsernameFromJwt(token);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(auth);
+                    // Tentar montar UserDetails diretamente das claims (id + role)
+                    Long userId = null;
+                    String role = null;
+                    try {
+                        userId = jwtUtil.getUserIdFromJwt(token); // pode lançar se claim ausente
+                        role = jwtUtil.getRoleFromJwt(token);
+                    } catch (Exception e) {
+                        // claim ausente / formato inesperado: vamos ignorar e usar fallback
+                        userId = null;
+                        role = null;
+                    }
+
+                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        UserDetails userDetails = null;
+
+                        if (userId != null) {
+                            // montar UserDetailsImpl "fake" a partir das claims (sem consultar DB)
+                            com.codelink.model.Usuario u = new com.codelink.model.Usuario();
+                            u.setId(userId);
+                            u.setEmail(username);
+                            if (role != null) {
+                                try {
+                                    u.setRole(com.codelink.model.Role.valueOf(role));
+                                } catch (IllegalArgumentException ex) {
+                                    // role inválida na claim -> fallback para carregar do DB
+                                    u.setRole(null);
+                                }
+                            }
+
+                            userDetails = new com.codelink.security.UserDetailsImpl(u);
+                        }
+
+                        // fallback: se não foi possível montar UserDetails a partir do token
+                        if (userDetails == null) {
+                            userDetails = userDetailsService.loadUserByUsername(username);
+                        }
+
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                    }
+                }
+            } catch (Exception ex) {
+                // token inválido: não setar authentication. Se quiser, pode logar/debugar aqui.
+            }
         }
 
         filterChain.doFilter(request, response);

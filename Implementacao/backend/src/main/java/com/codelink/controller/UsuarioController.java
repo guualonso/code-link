@@ -42,7 +42,7 @@ public class UsuarioController {
                         .toUri();
         return ResponseEntity.created(location).body(criado);
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioCreateDTO dto){
         UsuarioDTO atualizado = service.atualizar(id, dto);

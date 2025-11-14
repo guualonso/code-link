@@ -1,0 +1,20 @@
+<div *ngIf="post as p">
+  <h2>{{ p.conteudo }}</h2>
+
+  <p *ngIf="p.imagem">
+    <img [src]="p.imagem">
+  </p>
+
+  <p>Postado em: {{ p.dataPostagem }}</p>
+  <p>Likes: {{ p.likes }}</p>
+
+  <p><strong>Autor:</strong> {{ p.autor.nome }}</p>
+
+  <h3>Comentários:</h3>
+
+  <ul>
+    <li *ngFor="let c of p.comentarios">
+      {{ c.texto }} — <i>{{ c.autor.nome }}</i>
+    </li>
+  </ul>
+</div>
