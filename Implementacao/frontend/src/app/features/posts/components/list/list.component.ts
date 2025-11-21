@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { PostService } from '../services/post.service';
-import { PostDTO } from '../../../shared/models/post.dto';
+import { PostService } from '../../services/post.service';
+import { PostDTO } from '../../../../shared/models/post.dto';
 
 @Component({
   selector: 'app-posts-list',
