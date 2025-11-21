@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, inject, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { PostService } from '../../core/services/post.service';
+import { PostService } from '../../posts/services/post.service';
 
 @Component({
   standalone: true,

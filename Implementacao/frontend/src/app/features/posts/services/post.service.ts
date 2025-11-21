@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PostDTO } from '../../shared/models/post.dto';
-import { PostCreateDTO } from '../../shared/models/post-create.dto';
+import { PostDTO } from '../../../shared/models/post.dto';
+import { PostCreateDTO } from '../../../shared/models/post-create.dto';
 
 @Injectable({
   providedIn: 'root'

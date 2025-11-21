@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { PostService } from '../../../core/services/post.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
   standalone: true,
